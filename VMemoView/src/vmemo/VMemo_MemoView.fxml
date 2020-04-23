@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="685.0" prefWidth="419.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="vmemo.VMemo_Controller">
+   <children>
+      <Button layoutX="24.0" layoutY="14.0" minHeight="18.0" minWidth="46.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="54.0" text="BACK" />
+      <TextArea layoutX="31.0" layoutY="536.0" prefHeight="91.0" prefWidth="360.0" text="Memo Text&#10;Memo Text&#10;Memo Text&#10;Memo Text&#10;Memo Text&#10;Memo Text&#10;Memo Text" />
+      <Button layoutX="31.0" layoutY="497.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="299.0" text="Play Audio" />
+      <Label layoutX="43.0" layoutY="471.0" prefHeight="18.0" prefWidth="328.0" text="Memo Title - Date/Time" />
+      <Button layoutX="24.0" layoutY="14.0" minHeight="18.0" minWidth="46.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="54.0" text="BACK" />
+      <CheckBox layoutX="294.0" layoutY="22.0" mnemonicParsing="false" text="Favorite" />
+      <ImageView fitHeight="390.0" fitWidth="353.0" layoutX="31.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" />
+      <ComboBox layoutX="31.0" layoutY="637.0" prefHeight="25.0" prefWidth="290.0" promptText="Add to Event..." />
+   </children>
+</AnchorPane>
