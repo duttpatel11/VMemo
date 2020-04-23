@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="695.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vmemo.GalleryController">
+   <children>
+      <Button layoutX="137.0" layoutY="42.0" minHeight="18.0" minWidth="46.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="75.0" text="Memos" />
+      <Button layoutX="211.0" layoutY="42.0" minHeight="18.0" minWidth="46.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="75.0" text="Events" />
+      <ComboBox layoutX="261.0" layoutY="94.0" prefWidth="150.0" promptText="Filter By..." />
+      <Separator layoutX="11.0" layoutY="411.0" prefHeight="4.0" prefWidth="402.0" />
+      <Separator layoutX="9.0" layoutY="128.0" prefHeight="4.0" prefWidth="402.0" />
+      <ScrollBar layoutX="402.0" layoutY="129.0" orientation="VERTICAL" prefHeight="546.0" prefWidth="9.0" />
+      <Button layoutX="347.0" layoutY="14.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" text="New" />
+      <ImageView fitHeight="254.0" fitWidth="336.0" layoutX="37.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-313.0" layoutY="384.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="240.0" fitWidth="336.0" layoutX="37.0" layoutY="432.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
