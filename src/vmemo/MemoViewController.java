@@ -4,25 +4,18 @@
 
 package vmemo;
 
-import java.awt.Image;
-import java.awt.image.SampleModel;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
-
+/**
+ * 
+ * @author Dutt2
+ */
 public class MemoViewController {
     private Model model;
 
