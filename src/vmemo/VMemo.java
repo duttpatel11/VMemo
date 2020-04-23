@@ -32,41 +32,6 @@ public class VMemo extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-        
-        
-       /* FXMLLoader newLoader = new FXMLLoader();   
-newLoader.setLocation(getClass().getResource("VMemo_GalleryView.fxml"));
-    Parent root = newLoader.load();
-    
-    MemoViewController newView = newLoader.getController();
-    newView.setModel(model);
-    
-    
-    primaryStage.setTitle("VMemo Testing");
-    primaryStage.setScene(new Scene(root, 1024, 768));
-    primaryStage.show();
-    }
-    */
-        
-     /*   Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
 
     /**
      * @param args the command line arguments
