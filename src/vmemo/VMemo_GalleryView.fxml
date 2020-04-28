@@ -1,23 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.ScrollBar?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="695.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vmemo.GalleryController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="729.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vmemo.GalleryController">
    <children>
-      <Button layoutX="137.0" layoutY="42.0" minHeight="18.0" minWidth="46.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="75.0" text="Memos" />
-      <Button layoutX="211.0" layoutY="42.0" minHeight="18.0" minWidth="46.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="75.0" text="Events" />
-      <ComboBox layoutX="261.0" layoutY="94.0" prefWidth="150.0" promptText="Filter By..." />
-      <Separator layoutX="11.0" layoutY="411.0" prefHeight="4.0" prefWidth="402.0" />
-      <Separator layoutX="9.0" layoutY="128.0" prefHeight="4.0" prefWidth="402.0" />
-      <ScrollBar layoutX="402.0" layoutY="129.0" orientation="VERTICAL" prefHeight="546.0" prefWidth="9.0" />
-      <Button layoutX="347.0" layoutY="14.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="62.0" text="New" />
-      <ImageView fitHeight="254.0" fitWidth="336.0" layoutX="37.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-313.0" layoutY="384.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="240.0" fitWidth="336.0" layoutX="37.0" layoutY="432.0" pickOnBounds="true" preserveRatio="true" />
+      <TabPane layoutX="68.0" layoutY="110.0" prefHeight="729.0" prefWidth="435.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab fx:id="memosTab" text="Memos           ">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.06876790830945559" orientation="VERTICAL" prefHeight="700.0" prefWidth="435.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <Button fx:id="newMemoButton" layoutX="353.0" layoutY="10.0" mnemonicParsing="false" onAction="#openMemoCreationView" text="New Memo" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <VBox fx:id="thumbnailsVBox" layoutX="96.0" layoutY="58.0" prefHeight="647.0" prefWidth="433.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                             <VBox.margin>
+                                                <Insets left="115.0" />
+                                             </VBox.margin>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                             <VBox.margin>
+                                                <Insets left="115.0" />
+                                             </VBox.margin>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                             <VBox.margin>
+                                                <Insets left="115.0" />
+                                             </VBox.margin>
+                                          </ImageView>
+                                          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                             <VBox.margin>
+                                                <Insets left="115.0" />
+                                             </VBox.margin>
+                                          </ImageView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="eventsTab" text="Events              ">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.06876790830945559" orientation="VERTICAL" prefHeight="700.0" prefWidth="435.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <Button fx:id="newEventButton" layoutX="353.0" layoutY="10.0" mnemonicParsing="false" onAction="#openEventCreationView" text="New Event" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <VBox fx:id="eventsVBox" layoutX="6.0" prefHeight="647.0" prefWidth="433.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Button fx:id="testEventButton1" mnemonicParsing="false" prefHeight="33.0" prefWidth="433.0" text="Event1" />
+                                          <Button fx:id="testEventButton2" mnemonicParsing="false" prefHeight="33.0" prefWidth="440.0" text="Event2" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
