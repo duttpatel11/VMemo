@@ -2,24 +2,32 @@
  * Sample Skeleton for 'VMemo_GalleryView.fxml' Controller Class
  */
 
-package vmemo;
+package vmemo.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import vmemo.MemoRepository;
+import vmemo.VMemo;
+import vmemo.model.Memo;
+import vmemo.view.MemoListCell;
+import vmemo.view.MemoView;
 
 /**
- * 
  * @author Dutt2
  */
 
@@ -56,6 +64,10 @@ public class GalleryController {
     private Button testEventButton2; // Value injected by FXMLLoader
 
     @FXML
+    private ListView<MemoView> memoList;
+
+    //Opens the EventCreationView interface and sets the scene
+    @FXML
     void openEventCreationView(ActionEvent event) throws IOException {
         Stage window = VMemo.primaryStage;
         FXMLLoader loader = new FXMLLoader();
@@ -67,34 +79,29 @@ public class GalleryController {
 
     }
 
+    //Gets the MemoCreationView and displays the scene & binds it to the list
     @FXML
     void openMemoCreationView(ActionEvent event) throws IOException {
         Stage window = VMemo.primaryStage;
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("memoCreationView.fxml"));
-        Pane layout = loader.load();
-        Scene scene = new Scene(layout);
+
+        FXMLLoader loader = new FXMLLoader(MemoCreationViewController.class.getResource("memoCreationView.fxml"));
+        Scene scene = new Scene(loader.load());
+        MemoCreationViewController controller = loader.getController();
+        controller.bind(this.memoList.getItems());
+
         window.setScene(scene);
         window.show();
-
-
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    //Initialization stage for the list
+    @FXML
     void initialize() {
-        assert memosTab != null : "fx:id=\"memosTab\" was not injected: check your FXML file 'VMemo_GalleryView.fxml'.";
-        assert newMemoButton != null : "fx:id=\"newMemoButton\" was not injected: check your FXML file 'VMemo_GalleryView.fxml'.";
-        assert thumbnailsVBox != null : "fx:id=\"thumbnailsVBox\" was not injected: check your FXML file 'VMemo_GalleryView.fxml'.";
-        assert eventsTab != null : "fx:id=\"eventsTab\" was not injected: check your FXML file 'VMemo_GalleryView.fxml'.";
-        assert newEventButton != null : "fx:id=\"newEventButton\" was not injected: check your FXML file 'VMemo_GalleryView.fxml'.";
-        assert eventsVBox != null : "fx:id=\"eventsVBox\" was not injected: check your FXML file 'VMemo_GalleryView.fxml'.";
-        assert testEventButton1 != null : "fx:id=\"testEventButton1\" was not injected: check your FXML file 'VMemo_GalleryView.fxml'.";
-        assert testEventButton2 != null : "fx:id=\"testEventButton2\" was not injected: check your FXML file 'VMemo_GalleryView.fxml'.";
-
-    }
-
-
-    void setModel(Model model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.memoList.setItems(VMemo.memos);
+        this.memoList.setCellFactory(new Callback<ListView<MemoView>, ListCell<MemoView>>() {
+            @Override
+            public ListCell<MemoView> call(ListView<MemoView> param) {
+                return new MemoListCell();
+            }
+        });
     }
 }

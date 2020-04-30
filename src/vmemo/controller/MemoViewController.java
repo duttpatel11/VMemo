@@ -2,10 +2,14 @@
  * Sample Skeleton for 'VMemo_MemoView.fxml' Controller Class
  */
 
-package vmemo;
+package vmemo.controller;
 
 import java.net.URL;
+import java.util.List;
+import java.util.Observable;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,10 +17,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import vmemo.MemoRepository;
+import vmemo.model.Memo;
+import vmemo.view.MemoView;
 
 
 /**
@@ -49,15 +57,8 @@ public class MemoViewController {
     @FXML // fx:id="favCheckBox"
     private CheckBox favCheckBox; // Value injected by FXMLLoader
 
-     private Model model;
 
-  //  @FXML // ResourceBundle that was given to the FXMLLoader
-  //  private ResourceBundle resources;
 
-  //  @FXML // URL location of the FXML file that was given to the FXMLLoader
-   // private URL location;
-    
-    private Label memoView;
     @FXML
     void backToMemoGallery(ActionEvent event) {
 
@@ -81,17 +82,13 @@ public class MemoViewController {
         assert titleTextArea != null : "fx:id=\"titleTextArea\" was not injected: check your FXML file 'VMemo_MemoView.fxml'.";
         assert deleteButton != null : "fx:id=\"deleteButton\" was not injected: check your FXML file 'VMemo_MemoView.fxml'.";
         assert favCheckBox != null : "fx:id=\"favCheckBox\" was not injected: check your FXML file 'VMemo_MemoView.fxml'.";
-
+        
+        
+ 
     }
     
    
-
-    public void setModel(Model model) {
-        this.model = model;
-        memoView.textProperty().bind(model.ViewProperty().asString());
-       
-    }
-    
+    //Displays the memo View and sets the controller
     @FXML
     public void viewController() throws Exception {
         Stage window = new Stage();
@@ -107,7 +104,6 @@ public class MemoViewController {
         window.setScene(scene);
         window.show();
       
-        view2.setModel(model);
     
 
     }
