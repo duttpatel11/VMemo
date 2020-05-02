@@ -28,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import vmemo.MemoRepository;
 import vmemo.VMemo;
 import vmemo.model.Memo;
 import vmemo.view.MemoView;
@@ -37,9 +38,12 @@ import vmemo.view.MemoView;
  * @author Dutt2
  */
 public class MemoCreationViewController {
-    private MemoView model = new MemoView(
-            new Memo()
-    );
+    private MemoView model;
+
+    {
+        Memo databaseModel = new Memo();
+        model = new MemoView(databaseModel);
+    }
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -75,7 +79,7 @@ public class MemoCreationViewController {
         chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Picures", "png", "jpg"));
         File selectedFile = chooser.showOpenDialog(VMemo.primaryStage);
 
-        if(selectedFile == null){
+        if (selectedFile == null) {
             return;
         }
 
@@ -106,15 +110,9 @@ public class MemoCreationViewController {
 
     @FXML
     void initialize() {
-        assert recordbutton != null : "fx:id=\"recordbutton\" was not injected: check your FXML file 'eventCreationView.fxml'.";
-        assert memoTextArea != null : "fx:id=\"memoTextArea\" was not injected: check your FXML file 'eventCreationView.fxml'.";
-        assert BackButton1 != null : "fx:id=\"BackButton1\" was not injected: check your FXML file 'eventCreationView.fxml'.";
-        assert titleTextArea != null : "fx:id=\"titleTextArea\" was not injected: check your FXML file 'eventCreationView.fxml'.";
-        assert importPicButton != null : "fx:id=\"importPicButton\" was not injected: check your FXML file 'eventCreationView.fxml'.";
-        assert saveButton != null : "fx:id=\"saveButton\" was not injected: check your FXML file 'eventCreationView.fxml'.";
-
         this.model.imageDescription.bind(this.memoTextArea.textProperty());
         this.importPicButton.visibleProperty().bind(this.model.imageProperty.isNull());
+        this.model.title.bind(this.titleTextArea.textProperty());
 
         // listen for the url change
         this.model.imageProperty.addListener(new ChangeListener<URL>() {
@@ -124,15 +122,21 @@ public class MemoCreationViewController {
                 imageView.imageProperty().set(image);
             }
         });
+
+
     }
-//binds the memoview list and handles any errors - tests to check if empty
-    public void bind(ObservableList<MemoView> target) {
+
+    public void bind(
+            ObservableList<MemoView> target,
+            MemoRepository repository
+    ) {
         this.saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (!target.contains(model)) {
                     target.add(model);
                 }
+                model.save(repository);
             }
         });
     }

@@ -21,17 +21,22 @@ public class MemoListCell extends ListCell<MemoView> {
         if (!empty) {
             URL url = item.imageProperty.get();
             if (url == null) {
-                return;
+                url = MemoListCell.class.getResource("/images/placeholder.png");
             }
 
             Image image = new Image(url.toString());
-            ImageView value = new ImageView(image);
-            value.resize(64, 64);
-            value.maxHeight(64);
-            value.maxWidth(64);
-            value.setFitHeight(64);
-            value.setFitWidth(64);
-            setGraphic(value);
+            ImageView imageView = new ImageView(image);
+            imageView.resize(64, 64);
+            imageView.maxHeight(64);
+            imageView.maxWidth(64);
+            imageView.setFitHeight(64);
+            imageView.setFitWidth(64);
+
+            Label title = new Label();
+            title.textProperty().bind(item.title);
+            HBox box = new HBox(imageView, title);
+            setGraphic(box);
         }
     }
 }
+

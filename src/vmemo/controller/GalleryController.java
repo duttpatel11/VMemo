@@ -87,7 +87,7 @@ public class GalleryController {
         FXMLLoader loader = new FXMLLoader(MemoCreationViewController.class.getResource("memoCreationView.fxml"));
         Scene scene = new Scene(loader.load());
         MemoCreationViewController controller = loader.getController();
-        controller.bind(this.memoList.getItems());
+        controller.bind(this.memoList.getItems(), VMemo.repository);
 
         window.setScene(scene);
         window.show();
@@ -100,6 +100,7 @@ public class GalleryController {
         this.memoList.setCellFactory(new Callback<ListView<MemoView>, ListCell<MemoView>>() {
             @Override
             public ListCell<MemoView> call(ListView<MemoView> param) {
+
                 return new MemoListCell();
             }
         });

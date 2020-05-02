@@ -20,6 +20,8 @@ import vmemo.controller.GalleryController;
 import vmemo.model.Memo;
 import vmemo.view.MemoView;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import java.util.List;
 
 /**
@@ -28,7 +30,9 @@ import java.util.List;
 public class VMemo extends Application {
 
     public static Stage primaryStage;
+
     public static final ObservableList<MemoView> memos = FXCollections.observableArrayList();
+    public static MemoRepository repository;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -46,17 +50,20 @@ public class VMemo extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // fetching data from database
-        List<Memo> memos = MemoRepository.fetch(); //Database representation
-
-        //Preparing memo view
-        for (Memo memo : memos) {
-            MemoView view = new MemoView(memo);
-            VMemo.memos.add(view);
-        }
+        EntityManager manager = Persistence.createEntityManagerFactory("IST311ProjectPU").createEntityManager();
+        repository = new MemoRepository(manager);
+        fetchAllMemos();
 
         // launching the application
         launch(args);
     }
 
+    private static void fetchAllMemos() {
+        List<Memo> memos = repository.findAll(); //Database representation
+        //Preparing memo view
+        for (Memo memo : memos) {
+            MemoView view = new MemoView(memo);
+            VMemo.memos.add(view);
+        }
+    }
 }
