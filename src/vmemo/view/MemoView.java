@@ -19,7 +19,7 @@ import javafx.beans.property.StringProperty;
 import java.net.URL;
 
 /**
- * @author Dutt2
+ * @author Dutt2 & 12
  */
 
 public class MemoView {

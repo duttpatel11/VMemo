@@ -35,7 +35,7 @@ import vmemo.view.MemoView;
 
 
 /**
- * @author Dutt2
+ * @author Dutt2 & 12
  */
 public class MemoCreationViewController {
     private MemoView model;

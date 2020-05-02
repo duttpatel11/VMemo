@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * @author Dutt2
+ * @author Dutt2 & 12
  */
 @Entity
 @Table(name = "Memo")

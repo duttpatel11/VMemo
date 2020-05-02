@@ -25,7 +25,7 @@ import javax.persistence.Persistence;
 import java.util.List;
 
 /**
- * @author 12
+ * @author Dutt2 & 12
  */
 public class VMemo extends Application {
 

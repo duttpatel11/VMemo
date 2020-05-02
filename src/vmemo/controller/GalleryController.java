@@ -28,7 +28,7 @@ import vmemo.view.MemoListCell;
 import vmemo.view.MemoView;
 
 /**
- * @author Dutt2
+ * @author Dutt2 & 12
  */
 
 public class GalleryController {

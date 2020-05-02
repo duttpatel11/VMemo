@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
- * @author Dutt2
+ * @author Dutt2 & 12
  */
 public class MemoRepository {
     private final EntityManager manager;
