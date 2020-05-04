@@ -2,14 +2,24 @@ package vmemo.view;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.TextAlignment;
+import vmemo.controller.memo.MemoCreationViewController;
+import vmemo.controller.memo.MemoListCellController;
 import vmemo.model.Memo;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class MemoListCell extends ListCell<MemoView> {
@@ -19,23 +29,19 @@ public class MemoListCell extends ListCell<MemoView> {
     protected void updateItem(MemoView item, boolean empty) {
         super.updateItem(item, empty);
         if (!empty) {
-            URL url = item.imageProperty.get();
-            if (url == null) {
-                url = MemoListCell.class.getResource("/images/placeholder.png");
-            }
+            Node root = this.loadListCellControllerNode(item);
+            super.setGraphic(root);
+        }
+    }
 
-            Image image = new Image(url.toString());
-            ImageView imageView = new ImageView(image);
-            imageView.resize(64, 64);
-            imageView.maxHeight(64);
-            imageView.maxWidth(64);
-            imageView.setFitHeight(64);
-            imageView.setFitWidth(64);
-
-            Label title = new Label();
-            title.textProperty().bind(item.title);
-            HBox box = new HBox(imageView, title);
-            setGraphic(box);
+    private Node loadListCellControllerNode(MemoView item) {
+        try {
+            FXMLLoader loader = new FXMLLoader(MemoListCellController.class.getResource("MemoListCellView.fxml"));
+            Node root = loader.load();
+            ((MemoListCellController) loader.getController()).bind(item);
+            return root;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

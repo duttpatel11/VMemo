@@ -6,12 +6,8 @@ package vmemo.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,9 +17,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import vmemo.MemoRepository;
 import vmemo.VMemo;
-import vmemo.model.Memo;
+import vmemo.controller.event.EventCreationViewController;
+import vmemo.controller.memo.MemoCreationViewController;
+import vmemo.view.EventListCell;
+import vmemo.view.EventView;
 import vmemo.view.MemoListCell;
 import vmemo.view.MemoView;
 
@@ -66,17 +64,22 @@ public class GalleryController {
     @FXML
     private ListView<MemoView> memoList;
 
+    @FXML
+    private ListView<EventView> eventListView;
+
     //Opens the EventCreationView interface and sets the scene
     @FXML
     void openEventCreationView(ActionEvent event) throws IOException {
+
         Stage window = VMemo.primaryStage;
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("eventCreationView.fxml"));
+        loader.setLocation(EventCreationViewController.class.getResource("eventCreationView.fxml"));
         Pane layout = loader.load();
+        EventCreationViewController controller = loader.getController();
+        controller.setView(this.eventListView.getSelectionModel().getSelectedItem());
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.show();
-
     }
 
     //Gets the MemoCreationView and displays the scene & binds it to the list
@@ -87,22 +90,18 @@ public class GalleryController {
         FXMLLoader loader = new FXMLLoader(MemoCreationViewController.class.getResource("memoCreationView.fxml"));
         Scene scene = new Scene(loader.load());
         MemoCreationViewController controller = loader.getController();
-        controller.bind(this.memoList.getItems(), VMemo.repository);
-
+        controller.setView(this.memoList.getItems(), this.memoList.getSelectionModel().getSelectedItem());
         window.setScene(scene);
         window.show();
     }
 
-    //Initialization stage for the list
+    //initializes & updates the cell views for memo and events
     @FXML
     void initialize() {
         this.memoList.setItems(VMemo.memos);
-        this.memoList.setCellFactory(new Callback<ListView<MemoView>, ListCell<MemoView>>() {
-            @Override
-            public ListCell<MemoView> call(ListView<MemoView> param) {
+        this.memoList.setCellFactory(param -> new MemoListCell());
 
-                return new MemoListCell();
-            }
-        });
+        this.eventListView.setItems(VMemo.events);
+        this.eventListView.setCellFactory(param -> new EventListCell());
     }
 }

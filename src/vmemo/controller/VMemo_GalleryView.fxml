@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="729.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vmemo.controller.GalleryController">
    <children>
@@ -20,7 +19,7 @@
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <Button fx:id="newMemoButton" layoutX="341.0" layoutY="10.0" mnemonicParsing="false" onAction="#openMemoCreationView" text="New Memo" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0" />
+                                    <Button fx:id="newMemoButton" layoutX="341.0" layoutY="10.0" mnemonicParsing="false" onAction="#openMemoCreationView" text="Update / Create" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -42,17 +41,12 @@
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <Button fx:id="newEventButton" layoutX="353.0" layoutY="10.0" mnemonicParsing="false" onAction="#openEventCreationView" text="New Event" />
+                                    <Button fx:id="newEventButton" layoutX="302.0" layoutY="10.0" mnemonicParsing="false" onAction="#openEventCreationView" text="Update/Create" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <VBox fx:id="eventsVBox" layoutX="6.0" prefHeight="647.0" prefWidth="433.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <Button fx:id="testEventButton1" mnemonicParsing="false" prefHeight="33.0" prefWidth="433.0" text="Event1" />
-                                          <Button fx:id="testEventButton2" mnemonicParsing="false" prefHeight="33.0" prefWidth="440.0" text="Event2" />
-                                       </children>
-                                    </VBox>
+                                    <ListView fx:id="eventListView" prefHeight="647.2" prefWidth="433.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </items>

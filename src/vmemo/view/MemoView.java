@@ -16,6 +16,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -28,13 +29,22 @@ public class MemoView {
     public StringProperty imageDescription = new SimpleStringProperty();
     public StringProperty title = new SimpleStringProperty();
     public StringProperty description = new SimpleStringProperty();
-    public ObjectProperty<URL> imageProperty = new SimpleObjectProperty<>();
+    public ObjectProperty<URL> imageProperty = new SimpleObjectProperty<>(MemoView.class.getResource("/images/placeholder.png"));
     public StringProperty recordingUrl;
 
+    //Stores the memo in the database & checks to see each value
     public MemoView(Memo databaseModel) {
         this.databaseModel = databaseModel;
         this.imageDescription.set(databaseModel.description);
         this.title.set(databaseModel.title);
+
+        if (databaseModel.imageUrl != null) {
+            try {
+                this.imageProperty.set(new URL(databaseModel.imageUrl));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
 
         this.title.addListener((observable, oldValue, newValue) -> {
             this.databaseModel.title = newValue;
@@ -42,6 +52,12 @@ public class MemoView {
 
         this.imageDescription.addListener((observable, oldValue, newValue) -> {
             this.databaseModel.imageDescription = newValue;
+        });
+        this.description.addListener((observable, oldValue, newValue) -> {
+            this.databaseModel.description = newValue;
+        });
+        this.imageProperty.addListener((observable, oldValue, newValue) -> {
+            this.databaseModel.imageUrl = newValue.toString();
         });
     }
 

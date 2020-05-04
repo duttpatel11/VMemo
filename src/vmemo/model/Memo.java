@@ -7,6 +7,8 @@ package vmemo.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Dutt2 & 12
@@ -38,16 +40,10 @@ public class Memo {
     @Column(name = "recordingUrl")
     public String recordingUrl;
 
-    @Override
-    public String toString() {
-        return "Memo{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", imageDescription='" + imageDescription + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", description='" + description + '\'' +
-                ", recordingUrl='" + recordingUrl + '\'' +
-                '}';
-    }
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    public List<Event> events = new ArrayList<>();
 }
 

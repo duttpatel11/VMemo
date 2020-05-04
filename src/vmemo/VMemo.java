@@ -8,16 +8,14 @@ package vmemo;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import vmemo.controller.GalleryController;
+import vmemo.model.Event;
 import vmemo.model.Memo;
+import vmemo.view.EventView;
 import vmemo.view.MemoView;
 
 import javax.persistence.EntityManager;
@@ -32,15 +30,17 @@ public class VMemo extends Application {
     public static Stage primaryStage;
 
     public static final ObservableList<MemoView> memos = FXCollections.observableArrayList();
+    public static final ObservableList<EventView> events = FXCollections.observableArrayList();
+
     public static MemoRepository repository;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
-        //Main initialization of the application
+        //Main initialization of the application design
         Parent parent = FXMLLoader.load(GalleryController.class.getResource("VMemo_GalleryView.fxml"));
-        primaryStage.setTitle("Testing");
+        primaryStage.setTitle("VMemo");
         Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -59,11 +59,18 @@ public class VMemo extends Application {
     }
 
     private static void fetchAllMemos() {
-        List<Memo> memos = repository.findAll(); //Database representation
+        List<Memo> memos = repository.findAllMemos();
         //Preparing memo view
         for (Memo memo : memos) {
             MemoView view = new MemoView(memo);
             VMemo.memos.add(view);
+        }
+
+        List<Event> events = repository.findAllEvents();
+        //Preparing events view
+        for (Event event : events) {
+            EventView view = new EventView(event);
+            VMemo.events.add(view);
         }
     }
 }

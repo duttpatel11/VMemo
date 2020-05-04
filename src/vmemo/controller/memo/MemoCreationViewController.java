@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vmemo.controller;
+package vmemo.controller.memo;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +11,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -20,16 +22,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import vmemo.MemoRepository;
 import vmemo.VMemo;
+import vmemo.controller.GalleryController;
 import vmemo.model.Memo;
 import vmemo.view.MemoView;
 
@@ -38,12 +41,7 @@ import vmemo.view.MemoView;
  * @author Dutt2 & 12
  */
 public class MemoCreationViewController {
-    private MemoView model;
 
-    {
-        Memo databaseModel = new Memo();
-        model = new MemoView(databaseModel);
-    }
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -72,72 +70,81 @@ public class MemoCreationViewController {
     @FXML
     private ImageView imageView;
 
+    private final ObjectProperty<URL> imageResultProperty = new SimpleObjectProperty<>();
+
     //Uses filechooser to navigate to file explorer & tests for selection type
     @FXML
     void OpenFileSelector(ActionEvent event) {
-        FileChooser chooser = new FileChooser();
-        chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Picures", "png", "jpg"));
-        File selectedFile = chooser.showOpenDialog(VMemo.primaryStage);
-
-        if (selectedFile == null) {
-            return;
-        }
-
         try {
-            URL fileUrl = selectedFile.toURI().toURL();
-            model.imageProperty.set(fileUrl);
+            URL fileUrl = this.selectImage();
+            if (fileUrl == null) {
+                return;
+            }
+            this.imageResultProperty.set(fileUrl);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
-    //Displays the gallery view when returning back
+    private URL selectImage() throws MalformedURLException {
+        FileChooser chooser = this.createFileChooserForImages();
+
+        File selectedFile = chooser.showOpenDialog(VMemo.primaryStage);
+        if (selectedFile == null) {
+            return null;
+        }
+
+        return selectedFile.toURI().toURL();
+    }
+
+    private FileChooser createFileChooserForImages() {
+        FileChooser chooser = new FileChooser();
+        chooser.setInitialDirectory(new File("."));
+        chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Pictures", "png", "jpg"));
+        return chooser;
+    }
+
+    //Displays the gallery view when returning to previous page
     @FXML
     void backToMemoGallery(ActionEvent event) throws IOException {
         Stage window = VMemo.primaryStage;
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("VMemo_GalleryView.fxml"));
+        loader.setLocation(GalleryController.class.getResource("VMemo_GalleryView.fxml"));
         Pane layout = loader.load();
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.show();
     }
 
-    @FXML
-    void saveMemo(ActionEvent event) {
-
-    }
-
+    //getting image listeners and setting basic view
     @FXML
     void initialize() {
-        this.model.imageDescription.bind(this.memoTextArea.textProperty());
-        this.importPicButton.visibleProperty().bind(this.model.imageProperty.isNull());
-        this.model.title.bind(this.titleTextArea.textProperty());
-
-        // listen for the url change
-        this.model.imageProperty.addListener(new ChangeListener<URL>() {
-            @Override
-            public void changed(ObservableValue<? extends URL> observable, URL oldValue, URL newValue) {
-                Image image = new Image(newValue.toString());
-                imageView.imageProperty().set(image);
-            }
+        this.imageResultProperty.addListener((observable, oldValue, newValue) -> {
+            Image image = new Image(newValue.toString());
+            imageView.imageProperty().set(image);
         });
-
-
+        this.importPicButton.opacityProperty().set(0.5);
     }
 
-    public void bind(
+    //displays view of each functional button & saves to database
+    public void setView(
             ObservableList<MemoView> target,
-            MemoRepository repository
-    ) {
-        this.saveButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (!target.contains(model)) {
-                    target.add(model);
-                }
-                model.save(repository);
+            MemoView view) {
+        if (view == null) {
+            view = new MemoView(new Memo());
+        }
+        MemoView finalView = view;
+        //Binds the text areas to the properties inside of memoview
+        this.memoTextArea.textProperty().bindBidirectional(view.imageDescription);
+        this.titleTextArea.textProperty().bindBidirectional(view.title);
+        this.imageResultProperty.bindBidirectional(view.imageProperty);
+
+        //updates the target list from previous view and saves to the repository
+        this.saveButton.setOnAction(event -> {
+            if (!target.contains(finalView)) {
+                target.add(finalView);
             }
+            finalView.save(VMemo.repository);
         });
     }
 }

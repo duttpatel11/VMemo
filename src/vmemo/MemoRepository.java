@@ -5,6 +5,7 @@
  */
 package vmemo;
 
+import vmemo.model.Event;
 import vmemo.model.Memo;
 
 import javax.persistence.EntityManager;
@@ -20,16 +21,24 @@ public class MemoRepository {
         this.manager = manager;
     }
 
-    public List<Memo> findAll() {
+    public List<Memo> findAllMemos() {
         return manager.createNamedQuery("Memo.findAll", Memo.class).getResultList();
     }
 
+    public List<Event> findAllEvents() {
+        return manager.createNamedQuery("Event.findAll", Event.class).getResultList();
+    }
+
     public void save(Memo memo) {
-        System.out.println(memo);
         this.manager.getTransaction().begin();
         this.manager.persist(memo);
         this.manager.getTransaction().commit();
     }
 
+    public void save(Event memo) {
+        this.manager.getTransaction().begin();
+        this.manager.persist(memo);
+        this.manager.getTransaction().commit();
+    }
 }
     

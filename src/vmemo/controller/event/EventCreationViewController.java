@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vmemo.controller;
+package vmemo.controller.event;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,12 +20,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import vmemo.VMemo;
+import vmemo.controller.GalleryController;
+import vmemo.model.Event;
+import vmemo.view.EventView;
 
 /**
- *
  * @author Dutt2
  */
 public class EventCreationViewController {
+    private EventView view = new EventView(new Event());
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -48,25 +53,32 @@ public class EventCreationViewController {
     void backToMemoGallery(ActionEvent event) throws IOException {
         Stage window = VMemo.primaryStage;
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("VMemo_GalleryView.fxml"));
+        loader.setLocation(GalleryController.class.getResource("VMemo_GalleryView.fxml"));
         Pane layout = loader.load();
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.show();
-
     }
 
-    @FXML
-    void saveMemo(ActionEvent event) {
-
+    //displays the opening view of the item that is selected
+    public void setView(EventView selectedItem) {
+        if (selectedItem == null) {
+            this.view = new EventView(new Event());
+        } else {
+            this.view = selectedItem;
+        }
+        this.bind(this.view);
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        assert memoTextArea != null : "fx:id=\"memoTextArea\" was not injected: check your FXML file 'eventCreationView.fxml'.";
-        assert BackButton1 != null : "fx:id=\"BackButton1\" was not injected: check your FXML file 'eventCreationView.fxml'.";
-        assert titleTextArea != null : "fx:id=\"titleTextArea\" was not injected: check your FXML file 'eventCreationView.fxml'.";
-        assert saveButton != null : "fx:id=\"saveButton\" was not injected: check your FXML file 'eventCreationView.fxml'.";
-
+    //binds text area to description and title
+    private void bind(EventView into) {
+        this.memoTextArea.textProperty().bindBidirectional(into.description);
+        this.titleTextArea.textProperty().bindBidirectional(into.title);
+        this.saveButton.setOnAction(event -> {
+            if (!VMemo.events.contains(into)) {
+                VMemo.events.add(into);
+            }
+            into.save(VMemo.repository);
+        });
     }
 }

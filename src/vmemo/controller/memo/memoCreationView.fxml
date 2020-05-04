@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="729.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vmemo.controller.MemoCreationViewController">
+<AnchorPane id="AnchorPane" prefHeight="729.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vmemo.controller.memo.MemoCreationViewController">
    <children>
       <Button fx:id="recordbutton" layoutX="43.0" layoutY="518.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="349.0" text="Record Audio" />
       <TextArea fx:id="memoTextArea" layoutX="43.0" layoutY="573.0" prefHeight="114.0" prefWidth="349.0" promptText="Type your Memo here..." />
@@ -14,6 +14,6 @@
       <TextField fx:id="titleTextArea" layoutX="43.0" layoutY="475.0" prefHeight="25.0" prefWidth="349.0" promptText="Enter the title of the picture..." />
       <ImageView fx:id="imageView" fitHeight="356.0" fitWidth="398.0" layoutX="19.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="importPicButton" layoutX="37.0" layoutY="89.0" mnemonicParsing="false" onAction="#OpenFileSelector" prefHeight="181.0" prefWidth="238.0" text="Import Picture" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="75.0" />
-      <Button fx:id="saveButton" layoutX="358.0" layoutY="32.0" mnemonicParsing="false" onAction="#saveMemo" prefHeight="34.0" prefWidth="57.0" text="Save" />
+      <Button fx:id="saveButton" layoutX="358.0" layoutY="32.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="57.0" text="Save" />
    </children>
 </AnchorPane>
